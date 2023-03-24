@@ -32,6 +32,9 @@ import {
   ValidationHandler,
   ValidationParams,
 } from './token-validation/validation-handler';
+import {
+   DPoPHandler
+} from './dpop/dpop-handler';
 import { UrlHelperService } from './url-helper.service';
 import {
   OAuthEvent,
@@ -68,6 +71,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * id_tokens.
    */
   public tokenValidationHandler: ValidationHandler;
+
+  /**
+   * The DPoPHandler used for the DPoP headers 
+   */
+  public dpopHandler: DPoPHandler;
 
   /**
    * @internal
@@ -110,6 +118,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   protected inImplicitFlow = false;
 
   protected saveNoncesInLocalStorage = false;
+
+  protected dpopSigningAlgValuesSupported: Array<string> = [];
+
   private document: Document;
 
   constructor(
@@ -117,6 +128,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected http: HttpClient,
     @Optional() storage: OAuthStorage,
     @Optional() tokenValidationHandler: ValidationHandler,
+    @Optional() dpopHandler: DPoPHandler,
     @Optional() protected config: AuthConfig,
     protected urlHelper: UrlHelperService,
     protected logger: OAuthLogger,
@@ -141,6 +153,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     if (tokenValidationHandler) {
       this.tokenValidationHandler = tokenValidationHandler;
+    }
+
+    if (dpopHandler) {
+      this.dpopHandler = dpopHandler;
     }
 
     if (config) {
@@ -558,6 +574,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           this.loginUrl = doc.authorization_endpoint;
           this.logoutUrl = doc.end_session_endpoint || this.logoutUrl;
           this.grantTypesSupported = doc.grant_types_supported;
+          this.dpopSigningAlgValuesSupported = doc.dpop_signing_alg_values_supported;
           this.issuer = doc.issuer;
           this.tokenEndpoint = doc.token_endpoint;
           this.userinfoEndpoint =
@@ -1885,6 +1902,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       'Content-Type',
       'application/x-www-form-urlencoded'
     );
+
+    if (this.dpopHandler ) {
+      const header = this.dpopHandler.getDPoPHeader("post",this.tokenEndpoint);
+      if (header) {
+        headers = headers.set('DPoP', header);
+      }        
+    }
 
     if (this.useHttpBasicAuth) {
       const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);

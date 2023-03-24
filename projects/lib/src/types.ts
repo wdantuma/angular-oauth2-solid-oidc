@@ -197,4 +197,5 @@ export interface OidcDiscoveryDoc {
   service_documentation: string;
   ui_locales_supported: string[];
   revocation_endpoint: string;
+  dpop_signing_alg_values_supported: string[];
 }

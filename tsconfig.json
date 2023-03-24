@@ -25,6 +25,9 @@
       "angular-oauth2-oidc": [
         "projects/lib/src/public_api"
       ],
+      "angular-oauth2-oidc-dpop": [
+        "projects/angular-oauth2-oidc-dpop/src/public-api"
+      ],
       "angular-oauth2-oidc-jwks": [
         "projects/angular-oauth2-oidc-jwks/src/public-api"
       ]

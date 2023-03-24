@@ -38,3 +38,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+projects/angular-oauth2-oidc-dpop/node_modules
+projects/angular-oauth2-oidc-jwks/node_modules
+

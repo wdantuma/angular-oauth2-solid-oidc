@@ -1,0 +1,12 @@
+{
+  "name": "angular-oauth2-oidc-dpop",
+  "license": "MIT",
+  "author": {
+    "name": "Willem Dantuma"
+  },
+  "version": "15.0.1",
+  "dependencies": {
+    "jsrsasign": "^10.3.0",
+    "tslib": "^2.3.0"
+  }
+}

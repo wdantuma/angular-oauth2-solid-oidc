@@ -336,6 +336,39 @@
           }
         }
       }
+    },
+    "angular-oauth2-oidc-dpop": {
+      "projectType": "library",
+      "root": "projects/angular-oauth2-oidc-dpop",
+      "sourceRoot": "projects/angular-oauth2-oidc-dpop/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/angular-oauth2-oidc-dpop/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/angular-oauth2-oidc-dpop/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/angular-oauth2-oidc-dpop/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/angular-oauth2-oidc-dpop/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   },
   "schematics": {

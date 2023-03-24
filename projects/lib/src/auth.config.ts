@@ -279,6 +279,14 @@ export class AuthConfig {
    */
   public checkOrigin? = false;
 
+  /**
+   * SolidOIDC is by default disabled 
+   * You can enable it here by setting this flag to true.
+   * https://solidproject.org/TR/oidc
+   * https://solidproject.org/TR/oidc-primer
+   */
+  public enableSolidOIDC? = false;
+
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
       Object.assign(this, json);
