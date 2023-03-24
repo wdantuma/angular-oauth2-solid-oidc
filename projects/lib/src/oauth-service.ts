@@ -1904,7 +1904,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     );
 
     if (this.dpopHandler ) {
-      const header = this.dpopHandler.getDPoPHeader("post",this.tokenEndpoint);
+      const header = this.dpopHandler.getDPoPHeader("POST",this.tokenEndpoint);
       if (header) {
         headers = headers.set('DPoP', header);
       }        
