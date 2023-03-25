@@ -11,4 +11,8 @@ export class NullDPoPHandler implements DPoPHandler {
     getDPoPHeader(): string {
         return null;
     }    
+    
+    initialize(signingAlgValuesSupported:Array<string>){
+
+    }
 }

@@ -4,5 +4,7 @@ export abstract class DPoPHandler {
       httpMethod:string,
       httpUri:string
       ): string;
+
+    public abstract initialize(signingAlgValuesSupported:Array<string>);
    
 }

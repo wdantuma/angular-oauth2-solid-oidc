@@ -1904,6 +1904,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     );
 
     if (this.dpopHandler ) {
+      this.dpopHandler.initialize(this.dpopSigningAlgValuesSupported); // only once attoken retrieval
       const header = this.dpopHandler.getDPoPHeader("POST",this.tokenEndpoint);
       if (header) {
         headers = headers.set('DPoP', header);
