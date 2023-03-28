@@ -21,7 +21,7 @@ export class DefaultDPoPHandler implements DPoPHandler {
     initialize(signingAlgValuesSupported: Array<string>) {
 
         supportedAlgs.forEach((supportedAlg) => {
-            if (signingAlgValuesSupported[0].includes(supportedAlg.key)) { // TODO change to [0] when identityserver fixed
+            if (signingAlgValuesSupported.includes(supportedAlg.key)) { 
                 this.selectedAlg = supportedAlg;
                 this.selectedAlg.keyPair = rs.KEYUTIL.generateKeypair(supportedAlg.alg, supportedAlg.keylenOrCurve);
                 return;
@@ -44,7 +44,7 @@ export class DefaultDPoPHandler implements DPoPHandler {
 
         let jwk = rs.KEYUTIL.getJWKFromKey(this.selectedAlg.keyPair.pubKeyObj);
         let jws = rs.KJUR.jws.JWS.sign(this.selectedAlg.key, {
-            "typ": "dpop+jwk", // TODO change to dpop+jwt when identityserver fixed
+            "typ": "dpop+jwt", 
             "alg": this.selectedAlg.key, "jwk": jwk
         },
             { jti: crypto.randomUUID(), htm: httpMethod, htu: httpUri, iat: Math.floor(Date.now() / 1000) },
